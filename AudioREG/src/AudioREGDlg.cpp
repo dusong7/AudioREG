@@ -74,6 +74,7 @@ BEGIN_MESSAGE_MAP(CAudioREGDlg, CDialogEx)
 	ON_BN_CLICKED(Exit_Button, &CAudioREGDlg::OnBnClickedExitButton)
 //	ON_EN_CHANGE(Result_Edit, &CAudioREGDlg::OnEnChangeEdit)
 ON_BN_CLICKED(Choose_Button, &CAudioREGDlg::OnBnClickedFileButton)
+ON_EN_CHANGE(Result_Edit, &CAudioREGDlg::OnEnChangeEdit)
 END_MESSAGE_MAP()
 
 
@@ -165,6 +166,34 @@ HCURSOR CAudioREGDlg::OnQueryDragIcon()
 
 
 
+UINT CAudioREGDlg::MyThreadFunction(LPVOID pParam)
+{
+	CAudioREGDlg *p = (CAudioREGDlg*)pParam;
+	char *infilename = NULL;
+	USES_CONVERSION;
+	infilename = T2A(p->filePath);
+	char outfilename[10] = "temp.txt";
+	int ret = p->AudioReg_login();
+	if ( ret != MSP_SUCCESS )
+	{
+		printf("MSPLogin failed , Error code %d.\n",ret);
+		//return -1;
+	}
+	int Finish = p->audio2text(infilename,outfilename);
+	if (Finish == 0)
+	{
+		p->statusText = "识别已完成";	
+		p->GetDlgItem(regStatus)->SetWindowTextW(p->statusText);
+
+		p->GetDlgItem(Start_Button)->EnableWindow(TRUE);
+	}
+	MSPLogout();//退出登录
+	return 0;
+
+}
+
+
+
 
 void CAudioREGDlg::OnBnClickedStartButton()
 {
@@ -178,6 +207,8 @@ void CAudioREGDlg::OnBnClickedStartButton()
 	
 	GetDlgItem(Result_Edit)->SetWindowTextW(resultShow);
 	GetDlgItem(Result_Edit)->UpdateWindow();
+	AfxBeginThread(MyThreadFunction,this);
+	/*
 	char *infilename = NULL;
 	USES_CONVERSION;
 	infilename = T2A(filePath);
@@ -198,6 +229,7 @@ void CAudioREGDlg::OnBnClickedStartButton()
 	}
 
 	MSPLogout();//退出登录
+	*/
 
 }
 
@@ -343,6 +375,7 @@ int CAudioREGDlg::audio2text(char *infilename,char *outfilename)
 			//out<<mText[i].startTime<<" "<<mText[i].endTime<<" "<<mText[i].textStr<<endl;
 			newStr = rStr->c_str();
 			resultShow = resultShow+(CString)("\r\n") + newStr;
+			GetDlgItem(Result_Edit)->SendMessage(WM_VSCROLL,Start_Button);
 			GetDlgItem(Result_Edit)->SetWindowTextW(resultShow);
 			GetDlgItem(Result_Edit)->UpdateWindow();
 
@@ -429,4 +462,15 @@ void CAudioREGDlg::OnBnClickedFileButton()
 		return;
 	}
 
+}
+
+
+void CAudioREGDlg::OnEnChangeEdit()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，它将不
+	// 发送此通知，除非重写 CDialogEx::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
 }

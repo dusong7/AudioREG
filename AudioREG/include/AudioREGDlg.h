@@ -20,6 +20,7 @@ public:
 	int audio2text(char *filename,char *outfile);
 	int AudioReg_login();
 	int ComputeSegNum(asseg_t *seg);
+	static UINT MyThreadFunction(LPVOID pParam);
 
 // й╣ож
 protected:
@@ -43,4 +44,5 @@ public:
 	afx_msg void OnBnClickedExitButton();
 //	afx_msg void OnEnChangeEdit();
 	afx_msg void OnBnClickedFileButton();
+	afx_msg void OnEnChangeEdit();
 };
