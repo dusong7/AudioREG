@@ -69,7 +69,7 @@ int seg_recognizer(const char* audiowave_file, float startTime, float endTime, s
 	int resultStatus;
 	char logStr[1000];
 	const char *session_id = NULL;
-	char *params = "lang=sms,acous=anhui,rate=16k,aue=raw,nbest=3,auf=audio/L16;rate=16000";
+	char *params = "lang=sms,acous=anhui,rate=16k,aue=speex-wb;7,nbest=3,auf=audio/L16;rate=16000";
 
 	if(endTime<startTime)
 	{
@@ -197,7 +197,7 @@ int seg_recognizer(const char* audiowave_file, float startTime, float endTime, s
 				break;
 			}
 
-			Sleep(100);
+			//Sleep(100);
 		}
 		
 		LogWrite("开始识别语音片段最后一段",0,2);
@@ -270,7 +270,7 @@ int seg_recognizer(const char* audiowave_file, float startTime, float endTime, s
 				}
 
 				endcount++;
-				Sleep(200);
+				//Sleep(150);
 			}
 			sprintf(logStr, "最后片段识别结果已全部取出，共进行了%d次循环，准备结束识别会话\n",endcount);
 			LogWrite(logStr,0,2);
@@ -283,7 +283,7 @@ int seg_recognizer(const char* audiowave_file, float startTime, float endTime, s
 
 	LogWrite("识别语音片段成功",0,2);
 	QISRSessionEnd(session_id, "MSP_REC_STOP_SUCCESS");
-	Sleep( 100 );
+	Sleep(50);
 	fclose(fp);
 	sprintf(logStr, "该片段已经识别成功会话结束，资源已释放\n");
 	LogWrite(logStr,0,2);

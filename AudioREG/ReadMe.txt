@@ -74,4 +74,4 @@ AudioREG.manifest
 /////////////////////////////////////////////////////////////////////////////
 
 本程序是用科大讯飞语音基础SDK做的语音识别的demo，主要是演示接口函数怎么调用，以及音频分割预处理
-程序界面做的很粗糙，核心函数是audio2text(char *infilename,char *outfilename)，这个是转换函数
+程序界面做的较粗糙，核心函数是audio2text(char *infilename,char *outfilename)，这个是转换函数，输入音频为16k单声道wav音频文件

@@ -420,28 +420,16 @@ int CAudioREGDlg::AudioReg_login()
 {
 	int ret = 0;
 	char *params = "lang=sms,acous=anhui,rate=16k,aue=raw,nbest=3,auf=audio/L16;rate=16000";
-	const char* login_configs = "appid = 53d5d940, timeout = 30000, work_dir =   .  ";//登录参数
-	//const char* login_configs = "appid = 53d78317, work_dir =   .  ";//登录参数
-	//const char *session_id = NULL;
-	//int errorCode = 0;
+	const char* login_configs = "appid = xxx, timeout = 30000, work_dir =   .  ";//登录参数
+	//appid=xxx，填写自己申请的id
 	//用户登录
-	char username[20] = "poryfly";
-	ret = MSPLogin(username,NULL, login_configs);//第一个参数为用户名，第二个参数为密码，第三个参数是登录参数，用户名和密码需要在http://open.voicecloud.cn注册并获取appid
+	char username[20] = "xxx";//xxx是用户名
+	ret = MSPLogin(username,NULL,login_configs);//第一个参数为用户名，第二个参数为密码，第三个参数是登录参数，用户名和密码需要在http://open.voicecloud.cn注册并获取appid
 
 	return ret;
 }
 
-//void CAudioREGDlg::OnEnChangeEdit()
-//{
-//	// TODO:  如果该控件是 RICHEDIT 控件，它将不
-//	// 发送此通知，除非重写 CDialogEx::OnInitDialog()
-//	// 函数并调用 CRichEditCtrl().SetEventMask()，
-//	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
-//
-//	// TODO:  在此添加控件通知处理程序代码
-//	UpdateData(FALSE);
-//	//SetDlgItemText()
-//}
+
 
 
 void CAudioREGDlg::OnBnClickedFileButton()
